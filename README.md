@@ -12,7 +12,7 @@ An elegant and interactive event registration form designed for the "Tech For Gi
 - Responsive design for mobile users.
 
 ### 🚀 Live Demo
-[Click here to view](https://raj4-creator.github.io/RESGISTRATION-FORM/)
+[Click here to view](http://127.0.0.1:5500/GIRLS%20TECH%20REGISTRATION.htm)
 
 ### 📁 Project Structure
 - `index.html`: Main form UI
