@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech For Girls Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa, #dee2e6);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden; 
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(270deg, #ffe4e1, #e0f7fa, #fff3e0, #f3e5f5);
+      background-size: 800% 800%;
+      animation: animatedGradient 15s ease infinite;
+    }
+    .floating-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+      opacity: 0.15;
+      animation: float 60s linear infinite;
+    }
+    @keyframes float {
+      0% { background-position: 0 0; }
+      100% { background-position: 10000px 10000px; }
+    }
+    .loading-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 4px;
+      background: #6c63ff;
+      animation: loadBar 3s ease-in-out forwards;
+    }
+    @keyframes loadBar {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+    .container {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 520px;
+      z-index: 1;
+      transition: all 0.6s ease-in-out;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, #6c63ff, #a084e8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .step {
+      display: none;
+      animation: fadeSlide 0.6s ease forwards;
+    }
+    .step.active { display: block; }
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+  @keyframes animatedGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+    .step-indicator {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 20px;
+    }
+    .step-indicator div {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ccc;
+    }
+    .step-indicator div.active {
+      background: #6c63ff;
+    }
+    label {
+      margin-top: 12px;
+      font-weight: 500;
+      display: block;
+    }
+    input, select, button {
+      padding: 12px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: 0.3s ease-in-out;
+      width: 100%;
+    }
+    input:focus, select:focus {
+      border-color: #6c63ff;
+      outline: none;
+      box-shadow: 0 0 5px #6c63ff44;
+    }
+    button {
+      background: linear-gradient(to right, #6c63ff, #a084e8);
+      color: white;
+      border: none;
+      margin-top: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 10px rgba(108,99,255,0.4);
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    #shareBtn {
+      background-color: #25D366;
+    }
+    #shareBtn, #submitBtn {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-stars"></div>
+  <div class="loading-bar"></div>
+  <div class="container">
+    <h1>🚀 Join Tech For Girls Community</h1>
+    <div class="step-indicator">
+      <div id="dot1" class="active"></div>
+      <div id="dot2"></div>
+      <div id="dot3"></div>
+    </div>
+    <form id="registrationForm">
+      <div class="step active" id="step1">
+        <label for="name">Name</label>
+        <input type="text" id="name" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" pattern="[0-9]{10}" maxlength="10" required>
+      </div>
+
+      <div class="step" id="step2">
+        <label for="email">Email ID</label>
+        <input type="email" id="email" required>
+
+        <label for="college">College / Department</label>
+        <input type="text" id="college" required>
+      </div>
+
+      <div class="step" id="step3">
+         <label for="screenshot">Upload Screenshot</label>
+         <input type="file" id="screenshot" accept="image/*" required> 
+
+        <button type="button" id="shareBtn">Share on WhatsApp</button>
+        <p id="clickCounter">Click count: 0/5</p>
+
+        <button type="submit" id="submitBtn">Submit</button>
+      </div>
+
+      <div class="nav-buttons">
+        <button type="button" id="prevBtn">Previous</button>
+        <button type="button" id="nextBtn">Next</button>
+      </div>
+    </form>
+  </div>
+  <script>  
+    let currentStep = 1;
+    const steps = document.querySelectorAll(".step");
+    const dots = ["dot1", "dot2", "dot3"];
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const shareBtn = document.getElementById("shareBtn");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function updateStep(step) {
+      steps.forEach((el, idx) => el.classList.toggle("active", idx === step - 1));
+      dots.forEach((id, idx) => document.getElementById(id).classList.toggle("active", idx === step - 1));
+      if (step === 1) prevBtn.style.display = "none";
+      else prevBtn.style.display = "inline-block";
+      if (step === steps.length) {
+        nextBtn.style.display = "none";
+        shareBtn.style.display = "inline-block";
+        submitBtn.style.display = "inline-block";
+      } else {
+        nextBtn.style.display = "inline-block";
+        shareBtn.style.display = "none";
+        submitBtn.style.display = "none";
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (currentStep < steps.length) currentStep++;
+      updateStep(currentStep);
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentStep > 1) currentStep--;
+      updateStep(currentStep);
+    });
+
+    updateStep(currentStep);
+
+    let clickCount = 0;
+    const clickCounter = document.getElementById("clickCounter");
+    shareBtn.addEventListener("click", () => {
+      if (clickCount < 5) {
+        clickCount++;
+        clickCounter.innerText = `Click count: ${clickCount}/5`;
+        const message = encodeURIComponent("Hey Buddy, Join Tech For Girls Community!");
+        window.open(`https://wa.me/?text=${message}`, '_blank');
+        if (clickCount === 5) alert("✅ Sharing complete. Please continue.");
+      }
+    });
+
+  
+    const form = document.getElementById("registrationForm");
+
+    form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (clickCount < 5) {
+    alert("Please complete 5 WhatsApp shares before submitting.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("name", document.getElementById("name").value);
+  formData.append("phone", document.getElementById("phone").value);
+  formData.append("email", document.getElementById("email").value);
+  formData.append("college", document.getElementById("college").value);
+
+  const fileInput = document.getElementById("screenshot");
+  formData.append("screenshot", fileInput.files[0]?.name || "Not uploaded");
+
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbyuAubmA1idrXAoG6hsRCOCfiR6i8rH_spY4g2ijubn-nQxSy_-hktzrpnNEW54gcst/exec",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    const result = await response.json();
+    if (result.status === "success") {
+      confetti({ particleCount: 100, spread: 70 });
+      alert("✅ Form submitted successfully!");
+      form.querySelectorAll("input, button").forEach(el => el.disabled = true);
+      localStorage.setItem("submitted", "true");
+    } else {
+      alert("Error: " + result.message);
+    }
+  } catch (error) {
+    alert("Error submitting form: " + error.message);
+  }
+});
+  </script>
+</body>
+</html>
